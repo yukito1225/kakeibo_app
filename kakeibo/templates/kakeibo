@@ -1,0 +1,13 @@
+<h1>カテゴリの追加</h1>
+<div class="breadcrumb-item">
+      <a href="{% url 'kakeibo:index' %}">TOP</a>
+</div>
+ 
+<form action='{% url "kakeibo:save" %}' method='post' class='form'>
+        <!-- ユーザー登録フォームを表示 -->
+        {% csrf_token %}
+        {{ CategoryInsertForm }}
+        <input type='submit' name='button_1' value="登録"></input>
+        <input type='submit' name='button_2' value="登録して続ける"></input>
+</form>
+
