@@ -1,0 +1,16 @@
+<html>
+<body>
+    <div class="kakeibo-form">
+        <h3>家計簿編集したい</h3>
+        <form action="{% url 'kakeibo:update' id %}" method="post">
+            {% csrf_token %}
+            <div class="text-memo">
+                {{ form.as_table }}
+            </div>
+            <div class="post-form">
+                <input type="submit" value="編集" class="post-button">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

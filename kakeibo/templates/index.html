@@ -1,0 +1,88 @@
+{% load static %}
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static '/style.css' %}">
+  <title>kakeibo_app</title>
+</head>
+
+<body>
+  <h1>家計簿アプリ</h1>
+  <div class="memo-form">
+    <form action="{% url 'kakeibo:post' %}" method="post">
+      {% csrf_token %}
+      <td><a href="{% url 'kakeibo:kakeibo_line' %}" method="post">分析</a></td>
+    </form>
+  </div>
+
+
+  <div class="memo-form">
+    <form action="{% url 'kakeibo:post' %}" method="post">
+      {% csrf_token %}
+      <td><a href="{% url 'kakeibo:insert' %}" method="post">家計簿追加</a></td>
+    </form>
+  </div>
+
+  <div class="memo-form">
+    <form action="{% url 'kakeibo:post' %}" method="post">
+      {% csrf_token %}
+      <td><a href="{% url 'kakeibo:category_insert' %}" method="post">カテゴリ追加</a></td>
+    </form>
+  </div>
+
+  <form action="{% url 'kakeibo:set_record_number' %}" method="post" >
+    {% csrf_token %}
+    <div class="slct01">
+        {{ record_number_form.record_number }}
+    </div>
+  </form>
+
+  <form action="{% url 'kakeibo:set_order' %}" method="post">
+    {% csrf_token %}
+    <div class="slct01">
+        {{ order_form.order_option }}
+    </div>
+  </form>
+  
+  <table>
+    <tr>
+      <th>日付</th>
+      <th>カテゴリ</th>
+      <th>金額</th>
+      <th>摘要</th>
+    </tr>
+
+  <form action="{% url 'kakeibo:post' %}" method="POST">
+    {% for category in page %}
+    <tr>
+      <td>{{category.date}}</td>
+      <td>{{category.category}}</td>
+      <td>￥{{category.money}}</td>
+      <td>{{category.memo}}</td>
+      <td><a href="{% url 'kakeibo:update' num=category.id %}" method="post">編集</a></td>
+      <td>
+        <p><input type="checkbox" name="delete" value="{{ category.id }}"></p>
+        {% csrf_token %}
+      </td>
+    </tr>
+    {% endfor %}
+    <button type="submit">削除</button>
+  </form>
+  </table>
+
+
+  <div class="pagination">
+    
+    {% for num in page.paginator.page_range %}
+        {% if page.number == num %}
+            <span class="current">{{ page.number }}</span>
+        {% else %}
+            <a href="{% url 'kakeibo:index' %}{{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+  </div>
+      
+</body>
+
+</html>
