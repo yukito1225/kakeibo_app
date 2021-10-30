@@ -1,9 +1,0 @@
-<div>
-    <form action="" method="POST">
-      {% for category in kakekibo_list %}
-          <p>{{ category }} - 削除: <input type="checkbox" name="delete" value="{{ category.id }}"></p>
-      {% endfor %}
-      {% csrf_token %}
-      <button type="submit">削除</button>
-    </form>
-  </div>
